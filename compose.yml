@@ -1,0 +1,96 @@
+# SOFA Demo docker compose
+# v0.0.1
+# 2026-04-09
+
+services:
+  # Database
+  sofadb:
+    image: timescale/timescaledb:latest-pg17
+    restart: unless-stopped
+    # secrets:
+    #   - db-password
+    user: postgres
+    environment:
+      - POSTGRES_DB=sofadb
+      # - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dbpassword  # THIS IS DUMB AND ONLY FOR TESTING
+    ports: 
+      - "5432:5432"
+    volumes:
+      - sofadb_data:/var/lib/postgresql/data
+      - ./sofadb:/docker-entrypoint-initdb.d/
+      - ./data:/tmp/data/
+    networks:
+      - sofa
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  # DB admin and maintenance  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=admin_password
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+    # entrypoint: /bin/sh -c "chmod 600 /pgpass; sudo chown -R 5050:5050 /pgadmin4/servers.json; /entrypoint.sh;"
+    ports:
+      - "8088:80" # Map host port 8080 to container port 80
+    volumes:
+      - ./dbadmin/servers.json:/pgadmin4/servers.json
+    user: "5050:5050"
+    networks:
+      - sofa
+    depends_on:
+      sofadb:
+        condition: service_healthy
+
+  #  Grafana
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+      - GF_PLUGINS_PREINSTALL=grafana-clock-panel
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      # Copies configs to Grafana folders to auto-load
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/config:/etc/grafana
+    networks:
+      - sofa
+    depends_on:
+      sofadb:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Go backend
+  sofaapp:
+    build: ./sofaapp
+    ports:
+      - "8888:8888"
+    networks:
+      - sofa
+    depends_on:
+      sofadb:
+        condition: service_healthy
+
+volumes:
+  sofadb_data:
+  grafana-data:
+
+networks:
+  sofa: {}
+  testing: {}
