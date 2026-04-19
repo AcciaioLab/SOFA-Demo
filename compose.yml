@@ -18,7 +18,7 @@ services:
       - "5432:5432"
     volumes:
       - sofadb_data:/var/lib/postgresql/data
-      - ./sofadb:/docker-entrypoint-initdb.d/
+      - ./db:/docker-entrypoint-initdb.d/
       - ./data:/tmp/data/
     networks:
       - sofa
@@ -49,43 +49,43 @@ services:
         condition: service_healthy
 
   #  Grafana
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=grafana
-      - GF_PLUGINS_PREINSTALL=grafana-clock-panel
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana-data:/var/lib/grafana
-      # Copies configs to Grafana folders to auto-load
-      - ./grafana/datasources:/etc/grafana/provisioning/datasources
-      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./grafana/config:/etc/grafana
-    networks:
-      - sofa
-    depends_on:
-      sofadb:
-        condition: service_healthy
-    restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "pg_isready" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # grafana:
+  #   image: grafana/grafana
+  #   container_name: grafana
+  #   environment:
+  #     - GF_SECURITY_ADMIN_USER=admin
+  #     - GF_SECURITY_ADMIN_PASSWORD=grafana
+  #     - GF_PLUGINS_PREINSTALL=grafana-clock-panel
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
+  #     # Copies configs to Grafana folders to auto-load
+  #     - ./grafana/datasources:/etc/grafana/provisioning/datasources
+  #     - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+  #     - ./grafana/config:/etc/grafana
+  #   networks:
+  #     - sofa
+  #   depends_on:
+  #     sofadb:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: [ "CMD", "pg_isready" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
 # Go backend
-  sofaapp:
-    build: ./sofaapp
-    ports:
-      - "8888:8888"
-    networks:
-      - sofa
-    depends_on:
-      sofadb:
-        condition: service_healthy
+  # sofaapp:
+  #   build: ./sofaapp
+  #   ports:
+  #     - "8888:8888"
+  #   networks:
+  #     - sofa
+  #   depends_on:
+  #     sofadb:
+  #       condition: service_healthy
 
 volumes:
   sofadb_data:

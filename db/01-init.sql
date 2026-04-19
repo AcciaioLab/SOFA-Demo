@@ -1,0 +1,11 @@
+-- Timescaledb extension
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+
+-- PGCRYPTO for UUID
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Create the schemas
+-- CREATE SCHEMA IF NOT EXISTS TrailerPM;
+-- CREATE SCHEMA IF NOT EXISTS management;
+-- CREATE SCHEMA IF NOT EXISTS trailer;
+-- CREATE SCHEMA IF NOT EXISTS stress;

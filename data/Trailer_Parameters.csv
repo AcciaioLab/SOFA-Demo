@@ -1,0 +1,6 @@
+trailer_id,VIN,IMEI,Make,Model,Active,Track_Width_T,Spring_Lat_Spacing,Roll_Centre_H,Kingpin_To_Axle_1,Axle_Spacing_1_2,Axle_Spacing_2_3,Unsprung_Mass_Axle_1,Unsprung_Mass_Axle_2,Unsprung_Mass_Axle_3,Sprung_Mass_Trailer,Total_Mass_Trailer,Suspension_Ratio,Sprung_CG_Height,CG_to_Axle_1,CG_to_Axle_2,CG_to_Axle_3
+0,VIN_FMC_0004,863719066611758,Trailer,T4,yes,1.85,0.95,0.7,5.4,1.35,1.35,700,700,700,7000,9100,0.591,1.68,2.015,3.365,4.715
+1,VIN_FMC_0005,863719066700429,Trailer,T5,yes,1.85,0.95,0.7,5.35,1.35,1.35,700,700,700,6000,8100,0.591,1.58,2,3.35,3.35
+2,VIN_FMC_0006,863719066713653,Trailer,T6,yes,1.85,0.95,0.7,5.4,1.35,1.35,700,700,700,7000,9100,0.591,1.68,2.015,3.365,4.715
+3,VIN_FMC_0007,863719067927369,Trailer,T7,yes,1.85,0.95,0.7,5.875,1.35,1.35,700,700,700,7000,9100,0.591,1.68,2.015,3.365,4.715
+4,VIN_FMC_TEST,863719065663149,Trailer,T7,yes,1.85,0.95,0.7,5.875,1.35,1.35,700,700,700,7000,9100,0.591,1.68,2.015,3.365,4.715
