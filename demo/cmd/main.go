@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"io"
+	"sofa-demo/internal/calc"
 	"sofa-demo/internal/db"
 	"sofa-demo/internal/parsecsv"
 	"time"
@@ -22,8 +23,12 @@ func main() {
 	}
 	defer db.CloseDBPool(dbpool)
 
+	// Load the trailer data
+	trailers := db.GetTrailerInfo(dbpool)
+	fmt.Println(trailers)
+
 	// Open CSV file
-	file, err := parsecsv.FileOpen("./../data/testdata.csv")
+	file, err := parsecsv.FileOpen("./data/testdata.csv")
 	if err != nil {
 		fmt.Printf("Error opening data file, %v.\n", err)
 		return
@@ -54,6 +59,10 @@ func main() {
 	ticker := time.NewTicker(time.Duration(tickTime) * time.Millisecond)
 	dataFinished := make(chan bool)
 
+	// Create the trailer load variables used to store calculations
+	var trailerLoad, trailerLoadLast calc.TrailerLoad
+	var trailerInput calc.TrailerInput
+
 	// Demo loop
 	go func() {
 		count := 0
@@ -66,10 +75,32 @@ func main() {
 					fmt.Printf("Data read error: %v.\n", err)
 				} else {
 					// Parse the current record into struct
-					db.InsertOneRecord(dbpool, record)
-					// DEBUG
-					count++
-					fmt.Println("Inserted record", count)
+					err := db.InsertOneTrailerInput(dbpool, record)
+					if err != nil {
+						fmt.Printf("Error inserting input into db, %v.\n", err)
+					} else {
+						// DEBUG
+						count++
+						fmt.Printf("Insert DB trailer input record %v.\n", count)
+					}
+
+					// Convert csv record to trailerInput struct
+					trailerInput.UnmarshalRecord(record)
+
+					// Run the calculation for the inserted record.
+					go func() {
+						t := trailers[trailerInput.VIN]
+						trailerInput.CalcLoadsFromInput(&trailerLoad, &trailerLoadLast, &t)
+						trailerLoadLast = trailerLoad
+
+						err := db.InsertOneTrailerLoad(dbpool, &trailerLoad)
+						if err != nil {
+							fmt.Printf("Error inserting load into db, %v.\n", err)
+						} else {
+							fmt.Printf("Insert DB trailer load record %v.\n", count)
+						}
+					}()
+
 				}
 
 			// All records have been read
@@ -79,14 +110,11 @@ func main() {
 		}
 	}()
 
+	// Sleep is calculated to be the end of the record inputs
 	time.Sleep(time.Duration(demoTimeMilli) * time.Millisecond)
 	ticker.Stop()
 	dataFinished <- true
 
 	fmt.Println("Demo complete")
-
-	// Insert into db
-
-	// Sleep
 
 }
