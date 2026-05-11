@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const demoTime int = 1 // Time in minutes for one run of the demo
+const demoTime int = 5 // Time in minutes for one run of the demo
 
 func main() {
 	fmt.Println("SOFA Demo App - Starting...")
