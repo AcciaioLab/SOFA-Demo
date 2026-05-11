@@ -4,24 +4,25 @@
   "metadata": {
     "name": "SOFA-DEMO-DASHBOARD",
     "namespace": "default",
-    "uid": "c2d19a09-1ca9-473d-8c8c-6d37db95ef25",
-    "resourceVersion": "1778378903046007",
-    "generation": 3,
-    "creationTimestamp": "2026-05-10T02:03:22Z",
+    "uid": "609507b3-df81-4b27-b6f9-0bcca49da231",
+    "resourceVersion": "1778494376033999",
+    "generation": 19,
+    "creationTimestamp": "2026-05-11T07:38:43Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "4156967967305728"
+      "grafana.app/deprecatedInternalID": "100148439162880"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
+      "grafana.app/folder": "",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerAllowsEdits": "true",
       "grafana.app/managerId": "demodashboard",
-      "grafana.app/sourceChecksum": "95402a890fd35d40b0632733c38fd60c",
+      "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
+      "grafana.app/sourceChecksum": "3219ed96bd9187a6197bec4a281c9c94",
       "grafana.app/sourcePath": "/etc/grafana/provisioning/dashboards/demodashboard.json",
-      "grafana.app/sourceTimestamp": "1778378897000",
-      "grafana.app/updatedBy": "user:dfllk982nf6yod",
-      "grafana.app/updatedTimestamp": "2026-05-10T02:08:02Z",
-      "grafana.app/folder": ""
+      "grafana.app/sourceTimestamp": "1778491828000",
+      "grafana.app/updatedBy": "user:bflpymkyipkw0f",
+      "grafana.app/updatedTimestamp": "2026-05-11T10:12:56Z"
     }
   },
   "spec": {
@@ -65,539 +66,6 @@
             }
           },
           "transparent": true
-        }
-      },
-      "panel-38": {
-        "kind": "Panel",
-        "spec": {
-          "id": 38,
-          "title": "GPS Position",
-          "description": "This shows the GPS position with color coding based on Speed (in km/h).",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as Time,\r\n    AVG(longitude) as AVG_longitude, AVG(latitude) as AVG_latitude, AVG(positionaccuracy) as AVG_positionaccuracy\r\nFROM\r\n    tbl_${device:csv}_can9_gnsspos\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t\r\nORDER BY\r\n    Time ASC"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as Time,\r\n    AVG(speed) as AVG_speed\r\nFROM\r\n    tbl_${device:csv}_can9_gnssspeed\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\nORDER BY\r\n    Time ASC\t"
-                      }
-                    },
-                    "refId": "B",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "merge",
-                  "spec": {
-                    "options": {}
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "AVG_speedkmh",
-                      "binary": {
-                        "left": "AVG_speed",
-                        "operator": "*",
-                        "reducer": "sum",
-                        "right": "3.6"
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      }
-                    }
-                  }
-                },
-                {
-                  "kind": "Transformation",
-                  "group": "filterByValue",
-                  "spec": {
-                    "options": {
-                      "filters": [
-                        {
-                          "config": {
-                            "id": "isNull",
-                            "options": {}
-                          },
-                          "fieldName": "AVG_longitude"
-                        },
-                        {
-                          "config": {
-                            "id": "isNull",
-                            "options": {}
-                          },
-                          "fieldName": "AVG_latitude"
-                        },
-                        {
-                          "config": {
-                            "id": "isNull",
-                            "options": {}
-                          },
-                          "fieldName": "AVG_speed"
-                        }
-                      ],
-                      "match": "any",
-                      "type": "exclude"
-                    }
-                  }
-                }
-              ],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "geomap",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "basemap": {
-                  "config": {},
-                  "name": "Layer 0",
-                  "opacity": 0.7,
-                  "tooltip": true,
-                  "type": "osm-standard"
-                },
-                "controls": {
-                  "mouseWheelZoom": true,
-                  "showAttribution": false,
-                  "showDebug": false,
-                  "showMeasure": false,
-                  "showScale": false,
-                  "showZoom": true
-                },
-                "layers": [
-                  {
-                    "config": {
-                      "arrow": 0,
-                      "style": {
-                        "color": {
-                          "field": "AVG_speedkmh",
-                          "fixed": "blue"
-                        },
-                        "lineWidth": 2,
-                        "opacity": 1,
-                        "rotation": {
-                          "fixed": 0,
-                          "max": 360,
-                          "min": -360,
-                          "mode": "mod"
-                        },
-                        "size": {
-                          "fixed": 4,
-                          "max": 15,
-                          "min": 2
-                        },
-                        "symbol": {
-                          "fixed": "img/icons/marker/circle.svg",
-                          "mode": "fixed"
-                        },
-                        "symbolAlign": {
-                          "horizontal": "center",
-                          "vertical": "center"
-                        },
-                        "text": {
-                          "field": "AVG_speed",
-                          "fixed": "",
-                          "mode": "fixed"
-                        },
-                        "textConfig": {
-                          "fontSize": 12,
-                          "offsetX": 0,
-                          "offsetY": 0,
-                          "textAlign": "center",
-                          "textBaseline": "middle"
-                        }
-                      }
-                    },
-                    "location": {
-                      "latitude": "AVG_latitude",
-                      "longitude": "AVG_longitude",
-                      "mode": "coords"
-                    },
-                    "name": "Layer 2",
-                    "opacity": 1,
-                    "tooltip": true,
-                    "type": "route"
-                  }
-                ],
-                "tooltip": {
-                  "mode": "details"
-                },
-                "view": {
-                  "allLayers": true,
-                  "dashboardVariable": false,
-                  "id": "fit",
-                  "lat": 0,
-                  "lon": 0,
-                  "noRepeat": false,
-                  "padding": 10,
-                  "shared": true,
-                  "zoom": 15
-                }
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-green"
-                      },
-                      {
-                        "value": 20,
-                        "color": "green"
-                      },
-                      {
-                        "value": 30,
-                        "color": "light-green"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 60,
-                        "color": "yellow"
-                      },
-                      {
-                        "value": 70,
-                        "color": "semi-dark-yellow"
-                      },
-                      {
-                        "value": 80,
-                        "color": "super-light-orange"
-                      },
-                      {
-                        "value": 90,
-                        "color": "light-orange"
-                      },
-                      {
-                        "value": 100,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 110,
-                        "color": "semi-dark-orange"
-                      },
-                      {
-                        "value": 120,
-                        "color": "dark-orange"
-                      },
-                      {
-                        "value": 130,
-                        "color": "light-red"
-                      },
-                      {
-                        "value": 140,
-                        "color": "red"
-                      },
-                      {
-                        "value": 150,
-                        "color": "dark-red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    }
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-41": {
-        "kind": "Panel",
-        "spec": {
-          "id": 41,
-          "title": "Engine Load vs. Speed",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    avg(S01PID04_CalcEngineLoad) as EngineLoad\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M04\r\nWHERE\r\n    date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n    AND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\n"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": false,
-                          "resultReuseMaxAgeInMinutes": 60
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    avg(S01PID0C_EngineRPM) as EngineSpeed\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M0C\r\nWHERE\r\n    date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n    AND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\n"
-                      }
-                    },
-                    "refId": "B",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "joinByField",
-                  "spec": {
-                    "options": {}
-                  }
-                }
-              ],
-              "queryOptions": {
-                "interval": "10s"
-              }
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "xychart",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": false
-                },
-                "mapping": "auto",
-                "series": [
-                  {
-                    "frame": {
-                      "matcher": {
-                        "id": "byIndex",
-                        "options": 0
-                      }
-                    },
-                    "x": {
-                      "matcher": {
-                        "id": "byType",
-                        "options": "number"
-                      }
-                    },
-                    "y": {
-                      "matcher": {
-                        "id": "byType",
-                        "options": "number"
-                      }
-                    }
-                  }
-                ],
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 2,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-green"
-                      },
-                      {
-                        "value": 20,
-                        "color": "green"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 70,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 90,
-                        "color": "yellow"
-                      },
-                      {
-                        "value": 110,
-                        "color": "dark-yellow"
-                      },
-                      {
-                        "value": 130,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 140,
-                        "color": "red"
-                      },
-                      {
-                        "value": 150,
-                        "color": "dark-red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "orange"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "fillOpacity": 50,
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "pointShape": "circle",
-                    "pointSize": {
-                      "fixed": 5
-                    },
-                    "pointStrokeWidth": 1,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "show": "points"
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "EngineLoad A"
-                    },
-                    "properties": [
-                      {
-                        "id": "decimals",
-                        "value": 0
-                      },
-                      {
-                        "id": "displayName",
-                        "value": "Engine Load"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "EngineSpeed B"
-                    },
-                    "properties": [
-                      {
-                        "id": "decimals",
-                        "value": 0
-                      },
-                      {
-                        "id": "displayName",
-                        "value": "Engine Speed"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
         }
       },
       "panel-42": {
@@ -705,1767 +173,6 @@
           }
         }
       },
-      "panel-44": {
-        "kind": "Panel",
-        "spec": {
-          "id": 44,
-          "title": "Load (%)",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "s01pid2f_fueltanklevel",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(S01PID04_CalcEngineLoad)\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M04\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t",
-                        "table": "tbl_3ba199e2_can1_obd2_service_01_s01pid_2f"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 0,
-                  "min": 0,
-                  "max": 100,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "red"
-                      },
-                      {
-                        "value": 20,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-orange"
-                      },
-                      {
-                        "value": 60,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 80,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 100,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#3d85c6"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-45": {
-        "kind": "Panel",
-        "spec": {
-          "id": 45,
-          "title": "DTCs (#)",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "s01pid2f_fueltanklevel",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    max(S03_DTC_Count) as max_S03DTC_Count\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_DTC_HEADER_S_M43\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t",
-                        "table": "tbl_3ba199e2_can1_obd2_service_01_s01pid_2f"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 1,
-                        "color": "red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "thresholds"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-47": {
-        "kind": "Panel",
-        "spec": {
-          "id": 47,
-          "title": "Ambi. °C",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": false,
-                          "resultReuseMaxAgeInMinutes": 60
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    avg(S01PID46_AmbientAirTemp) as S01PID46_AmbientAirTemp\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M46\r\nWHERE\r\n    date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n    AND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\n"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 1,
-                  "min": 0,
-                  "max": 140,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-blue"
-                      },
-                      {
-                        "value": 10,
-                        "color": "semi-dark-blue"
-                      },
-                      {
-                        "value": 20,
-                        "color": "light-green"
-                      },
-                      {
-                        "value": 25,
-                        "color": "green"
-                      },
-                      {
-                        "value": 30,
-                        "color": "light-yellow"
-                      },
-                      {
-                        "value": 35,
-                        "color": "light-orange"
-                      },
-                      {
-                        "value": 40,
-                        "color": "red"
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "OutdoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Outdoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "IndoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Indoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "BatteryMaxTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Battery"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-48": {
-        "kind": "Panel",
-        "spec": {
-          "id": 48,
-          "title": "RPM",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "s01pid2f_fueltanklevel",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(S01PID0C_EngineRPM)\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M0C\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t",
-                        "table": "tbl_3ba199e2_can1_obd2_service_01_s01pid_2f"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "background",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "red"
-                      },
-                      {
-                        "value": 20,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-orange"
-                      },
-                      {
-                        "value": 60,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 80,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 100,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#3d85c6"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-49": {
-        "kind": "Panel",
-        "spec": {
-          "id": 49,
-          "title": "Fuel Rate",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "s01pid2f_fueltanklevel",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(S01PID5E_EngineFuelRate)\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M5E\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t",
-                        "table": "tbl_3ba199e2_can1_obd2_service_01_s01pid_2f"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "background",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "litreh",
-                  "decimals": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "red"
-                      },
-                      {
-                        "value": 20,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-orange"
-                      },
-                      {
-                        "value": 60,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 80,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 100,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#565656"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-52": {
-        "kind": "Panel",
-        "spec": {
-          "id": 52,
-          "title": "Coolant °C",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": false,
-                          "resultReuseMaxAgeInMinutes": 60
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    avg(S01PID05_EngineCoolantTemp) as S01PID05_EngineCoolantTemp\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M05\r\nWHERE\r\n    date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n    AND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\n"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 1,
-                  "min": 0,
-                  "max": 140,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-blue"
-                      },
-                      {
-                        "value": 10,
-                        "color": "semi-dark-blue"
-                      },
-                      {
-                        "value": 20,
-                        "color": "light-blue"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-blue"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "dark-green"
-                      },
-                      {
-                        "value": 100,
-                        "color": "#EAB839"
-                      },
-                      {
-                        "value": 120,
-                        "color": "dark-orange"
-                      },
-                      {
-                        "value": 140,
-                        "color": "red"
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "OutdoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Outdoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "IndoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Indoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "BatteryMaxTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Battery"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-53": {
-        "kind": "Panel",
-        "spec": {
-          "id": 53,
-          "title": "Torque (%)",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "s01pid2f_fueltanklevel",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(S01PID62_ActualEngTorqPct)\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M62\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t",
-                        "table": "tbl_3ba199e2_can1_obd2_service_01_s01pid_2f"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 0,
-                  "min": 0,
-                  "max": 100,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "red"
-                      },
-                      {
-                        "value": 20,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 40,
-                        "color": "super-light-orange"
-                      },
-                      {
-                        "value": 60,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 80,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 100,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#3d85c6"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-54": {
-        "kind": "Panel",
-        "spec": {
-          "id": 54,
-          "title": "Altitude",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(altitude) as AVG_altitude\r\nFROM\r\n    tbl_${device:csv}_can9_gnssaltitude\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "background",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "lengthm",
-                  "decimals": 0,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-green"
-                      },
-                      {
-                        "value": 20,
-                        "color": "green"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 70,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 90,
-                        "color": "yellow"
-                      },
-                      {
-                        "value": 110,
-                        "color": "dark-yellow"
-                      },
-                      {
-                        "value": 130,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 140,
-                        "color": "red"
-                      },
-                      {
-                        "value": 150,
-                        "color": "dark-red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#3d85c6"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-57": {
-        "kind": "Panel",
-        "spec": {
-          "id": 57,
-          "title": "Intake °C",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": false,
-                          "resultReuseMaxAgeInMinutes": 60
-                        },
-                        "format": 1,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    avg(S01PID0F_IntakeAirTemperature) as S01PID0F_IntakeAirTemperature\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M0F\r\nWHERE\r\n    date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n    AND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\r\n"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "gauge",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "barShape": "flat",
-                "barWidthFactor": 0.5,
-                "effects": {
-                  "barGlow": false,
-                  "centerGlow": false,
-                  "gradient": false
-                },
-                "endpointMarker": "point",
-                "minVizHeight": 75,
-                "minVizWidth": 75,
-                "orientation": "auto",
-                "reduceOptions": {
-                  "calcs": [
-                    "mean"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "segmentCount": 1,
-                "segmentSpacing": 0.3,
-                "shape": "gauge",
-                "showThresholdLabels": false,
-                "showThresholdMarkers": false,
-                "sizing": "auto",
-                "sparkline": false,
-                "textMode": "auto"
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "decimals": 1,
-                  "min": 0,
-                  "max": 140,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-blue"
-                      },
-                      {
-                        "value": 10,
-                        "color": "semi-dark-blue"
-                      },
-                      {
-                        "value": 15,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 20,
-                        "color": "green"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 60,
-                        "color": "yellow"
-                      },
-                      {
-                        "value": 70,
-                        "color": "light-orange"
-                      },
-                      {
-                        "value": 80,
-                        "color": "dark-orange"
-                      },
-                      {
-                        "value": 90,
-                        "color": "red"
-                      }
-                    ]
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "OutdoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Outdoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "IndoorTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Indoor"
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "BatteryMaxTemperature"
-                    },
-                    "properties": [
-                      {
-                        "id": "displayName",
-                        "value": "Battery"
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-58": {
-        "kind": "Panel",
-        "spec": {
-          "id": 58,
-          "title": "Evap Vapor Pres (kPa)",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    AVG(S01PID53_AbsEvapSysVapPres) as AVG_S01PID53_AbsEvapSysVapPres\r\nFROM\r\n    tbl_${device:csv}_CAN1_OBD2_S_M41_S01PID_M53\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t\r\nORDER BY \r\n    time asc"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "histogram",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "bucketOffset": 0,
-                "bucketSize": 1,
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": false
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "single",
-                  "sort": "none"
-                }
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "none",
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "dark-green"
-                      },
-                      {
-                        "value": 20,
-                        "color": "green"
-                      },
-                      {
-                        "value": 50,
-                        "color": "super-light-green"
-                      },
-                      {
-                        "value": 70,
-                        "color": "super-light-yellow"
-                      },
-                      {
-                        "value": 90,
-                        "color": "yellow"
-                      },
-                      {
-                        "value": 110,
-                        "color": "dark-yellow"
-                      },
-                      {
-                        "value": 130,
-                        "color": "orange"
-                      },
-                      {
-                        "value": 140,
-                        "color": "red"
-                      },
-                      {
-                        "value": 150,
-                        "color": "dark-red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "purple"
-                  },
-                  "custom": {
-                    "fillOpacity": 80,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "lineWidth": 1,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    }
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
-      "panel-59": {
-        "kind": "Panel",
-        "spec": {
-          "id": 59,
-          "title": "Message: ${message:csv} | Signal: ${signal}",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-athena-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "b2971a20-4d5b-46da-81bb-6b5f099016d7"
-                      },
-                      "spec": {
-                        "column": "longitude",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "format": 0,
-                        "rawSQL": "SELECT\r\n    $__timeGroup(t, $__interval) as time,\r\n    ${signal_value:csv}\r\nFROM\r\n    tbl_${device:csv}_${message:csv}\r\nWHERE\r\n\tdate_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd') \r\n\tAND\r\n    $__timeFilter(t)\r\nGROUP BY\r\n    $__timeGroup(t, $__interval)\t\r\norder by \r\n    time asc"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "filterFieldsByName",
-                  "spec": {
-                    "options": {
-                      "include": {
-                        "pattern": "/^(${aggregation:pipe})_.*|^time$/"
-                      }
-                    }
-                  }
-                }
-              ],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "timeseries",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "annotations": {
-                  "clustering": -1,
-                  "multiLane": false
-                },
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "multi",
-                  "sort": "none"
-                }
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "palette-classic"
-                  },
-                  "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "barAlignment": 0,
-                    "barWidthFactor": 0.6,
-                    "drawStyle": "line",
-                    "fillOpacity": 10,
-                    "gradientMode": "opacity",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
-                    "insertNulls": 600000,
-                    "lineInterpolation": "linear",
-                    "lineStyle": {
-                      "fill": "solid"
-                    },
-                    "lineWidth": 1,
-                    "pointSize": 2,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "showPoints": "always",
-                    "showValues": false,
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "_col1"
-                    },
-                    "properties": [
-                      {
-                        "id": "mappings",
-                        "value": []
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "AVG_s01pid34_oxysensor1_crnt"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "red",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "AVG_s01pid34_oxysensor1_faer"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "#838383",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "AVG_angularratez"
-                    },
-                    "properties": [
-                      {
-                        "id": "custom.axisPlacement",
-                        "value": "right"
-                      },
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "#595959",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "AVG_accelerationx"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "orange",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "AVG_accelerationy"
-                    },
-                    "properties": [
-                      {
-                        "id": "color",
-                        "value": {
-                          "fixedColor": "blue",
-                          "mode": "fixed"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-60": {
-        "kind": "Panel",
-        "spec": {
-          "id": 60,
-          "title": "Trip Odometer",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-postgresql-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "sofa_db"
-                      },
-                      "spec": {
-                        "column": "longitude",
-                        "connectionArgs": {
-                          "catalog": "__default",
-                          "database": "__default",
-                          "region": "__default",
-                          "resultReuseEnabled": true,
-                          "resultReuseMaxAgeInMinutes": 10000
-                        },
-                        "dataset": "sofadb",
-                        "editorMode": "builder",
-                        "format": 0,
-                        "rawSQL": "WITH distance_deltas AS (\r\n    SELECT\r\n        distancetrip - LAG(distancetrip) OVER (ORDER BY t) AS delta_distance\r\n    FROM\r\n        tbl_${device:csv}_can9_gnssdistance\r\n    WHERE\r\n        date_created BETWEEN $__rawTimeFrom('yyyy/MM/dd') AND $__rawTimeTo('yyyy/MM/dd')\r\n        AND\r\n        $__timeFilter(t)\r\n)\r\nSELECT\r\n    SUM(IF(delta_distance > 0, delta_distance, 0)) AS sum_positive_delta_distance\r\nFROM\r\n    distance_deltas\r\nWHERE\r\n    delta_distance IS NOT NULL;\r\n",
-                        "rawSql": ""
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [
-                {
-                  "kind": "Transformation",
-                  "group": "calculateField",
-                  "spec": {
-                    "options": {
-                      "alias": "MAX_distancetripkm",
-                      "binary": {
-                        "left": "MAX_distancetrip",
-                        "operator": "/",
-                        "right": "1000"
-                      },
-                      "mode": "binary",
-                      "reduce": {
-                        "reducer": "sum"
-                      },
-                      "replaceFields": true
-                    }
-                  }
-                }
-              ],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "background",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "unit": "lengthm",
-                  "decimals": 0,
-                  "min": 0,
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "fixed",
-                    "fixedColor": "#3d85c6"
-                  }
-                },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "_col1"
-                    },
-                    "properties": [
-                      {
-                        "id": "mappings",
-                        "value": []
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        }
-      },
-      "panel-62": {
-        "kind": "Panel",
-        "spec": {
-          "id": 62,
-          "title": "FMC Tracker",
-          "description": "",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-postgresql-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "sofa_db"
-                      },
-                      "spec": {
-                        "dataset": "sofadb",
-                        "editorMode": "code",
-                        "format": "table",
-                        "rawQuery": true,
-                        "rawSql": "SELECT imei FROM trailers WHERE vin='$Trailer'",
-                        "sql": {
-                          "columns": [
-                            {
-                              "parameters": [
-                                {
-                                  "name": "imei",
-                                  "type": "functionParameter"
-                                }
-                              ],
-                              "type": "function"
-                            }
-                          ],
-                          "groupBy": [
-                            {
-                              "property": {
-                                "type": "string"
-                              },
-                              "type": "groupBy"
-                            }
-                          ],
-                          "limit": 50
-                        },
-                        "table": "trailers"
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "table",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "cellHeight": "sm",
-                "showHeader": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "left",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
       "panel-63": {
         "kind": "Panel",
         "spec": {
@@ -2492,7 +199,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT make, model, active FROM trailers WHERE vin='$Trailer'",
+                        "rawSql": "SELECT make AS \"MAKE\", model as \"MODEL\", active AS \"ACTIVE\" FROM trailers WHERE vin='$Trailer'",
                         "sql": {
                           "columns": [
                             {
@@ -2552,7 +259,13 @@
             "spec": {
               "options": {
                 "cellHeight": "sm",
-                "showHeader": true
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": false,
+                    "displayName": "model"
+                  }
+                ]
               },
               "fieldConfig": {
                 "defaults": {
@@ -2660,40 +373,40 @@
           },
           "vizConfig": {
             "kind": "VizConfig",
-            "group": "table",
+            "group": "stat",
             "version": "13.0.1",
             "spec": {
               "options": {
-                "cellHeight": "sm",
-                "showHeader": true
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/^time$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
               },
               "fieldConfig": {
                 "defaults": {
+                  "unit": "dateTimeAsLocal",
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
                       {
                         "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
+                        "color": "text"
                       }
                     ]
                   },
                   "color": {
                     "mode": "thresholds"
-                  },
-                  "custom": {
-                    "align": "auto",
-                    "cellOptions": {
-                      "type": "auto"
-                    },
-                    "footer": {
-                      "reducers": []
-                    },
-                    "inspect": false
                   }
                 },
                 "overrides": []
@@ -3083,7 +796,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT voltagebattery FROM trailer_input WHERE vin='$Trailer' ORDER BY voltagebattery DESC LIMIT 1 ",
+                        "rawSql": "SELECT voltagebattery FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
                         "sql": {
                           "columns": [
                             {
@@ -3200,7 +913,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT satellitescount FROM trailer_input WHERE vin='$Trailer' ORDER BY satellitescount DESC LIMIT 1 ",
+                        "rawSql": "SELECT satellitescount FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
                         "sql": {
                           "columns": [
                             {
@@ -3232,6 +945,1641 @@
                           "orderByDirection": "DESC"
                         },
                         "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-72": {
+        "kind": "Panel",
+        "spec": {
+          "id": 72,
+          "title": "Data Mode",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT datamode FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "datamode",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "datamode",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/^datamode$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-73": {
+        "kind": "Panel",
+        "spec": {
+          "id": 73,
+          "title": "FMC Battery Current",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT currentbattery FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "currentbattery",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "currentbattery",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "amp",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-74": {
+        "kind": "Panel",
+        "spec": {
+          "id": 74,
+          "title": "Trailer Voltage",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT voltagetrailer FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "voltagebattery",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "voltagebattery",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "volt",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "dark-red"
+                      },
+                      {
+                        "value": 12,
+                        "color": "dark-green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-75": {
+        "kind": "Panel",
+        "spec": {
+          "id": 75,
+          "title": "FMC Event",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT event FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "satellitescount",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "satellitescount",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-76": {
+        "kind": "Panel",
+        "spec": {
+          "id": 76,
+          "title": "FMC Event Priority",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT priority FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "satellitescount",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "satellitescount",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-77": {
+        "kind": "Panel",
+        "spec": {
+          "id": 77,
+          "title": "FMC Number of Records",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT numofrecords FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "satellitescount",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "satellitescount",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-78": {
+        "kind": "Panel",
+        "spec": {
+          "id": 78,
+          "title": "GSM Signal",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT gsmsignal FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "satellitescount",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "satellitescount",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-80": {
+        "kind": "Panel",
+        "spec": {
+          "id": 80,
+          "title": "FMC IMEI",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT imei FROM trailers WHERE vin='$Trailer'",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/^imei$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-81": {
+        "kind": "Panel",
+        "spec": {
+          "id": 81,
+          "title": "Last Record From Server",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT servertime FROM trailer_input WHERE vin='$Trailer' ORDER BY servertime DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "datamode",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "datamode",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/^servertime$/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "dateTimeAsLocal",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-82": {
+        "kind": "Panel",
+        "spec": {
+          "id": 82,
+          "title": "Satellite Speed",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT speedsat FROM trailer_input WHERE vin='$Trailer'",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "speed",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "velocitykmh",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 85,
+                        "color": "yellow"
+                      },
+                      {
+                        "value": 90,
+                        "color": "orange"
+                      },
+                      {
+                        "value": 95,
+                        "color": "dark-orange"
+                      },
+                      {
+                        "value": 100,
+                        "color": "dark-red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-83": {
+        "kind": "Panel",
+        "spec": {
+          "id": 83,
+          "title": "GPS Position",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "builder",
+                        "format": "table",
+                        "rawSql": "SELECT latitude, longitude FROM trailer_input LIMIT 50 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "latitude",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            },
+                            {
+                              "parameters": [
+                                {
+                                  "name": "longitude",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "geomap",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "basemap": {
+                  "config": {},
+                  "name": "Layer 2",
+                  "noRepeat": true,
+                  "type": "default"
+                },
+                "controls": {
+                  "mouseWheelZoom": true,
+                  "showAttribution": true,
+                  "showDebug": false,
+                  "showMeasure": true,
+                  "showScale": true,
+                  "showZoom": true
+                },
+                "layers": [
+                  {
+                    "config": {
+                      "arrow": 0,
+                      "style": {
+                        "color": {
+                          "fixed": "dark-green"
+                        },
+                        "lineWidth": 2,
+                        "opacity": 1,
+                        "rotation": {
+                          "fixed": 0,
+                          "max": 360,
+                          "min": -360,
+                          "mode": "mod"
+                        },
+                        "size": {
+                          "fixed": 5,
+                          "max": 15,
+                          "min": 2
+                        },
+                        "symbol": {
+                          "fixed": "img/icons/marker/circle.svg",
+                          "mode": "fixed"
+                        },
+                        "symbolAlign": {
+                          "horizontal": "center",
+                          "vertical": "center"
+                        },
+                        "textConfig": {
+                          "fontSize": 12,
+                          "offsetX": 0,
+                          "offsetY": 0,
+                          "textAlign": "center",
+                          "textBaseline": "middle"
+                        }
+                      }
+                    },
+                    "filterData": {
+                      "id": "byRefId",
+                      "options": "A"
+                    },
+                    "name": "Layer 1",
+                    "tooltip": true,
+                    "type": "route"
+                  }
+                ],
+                "tooltip": {
+                  "mode": "details"
+                },
+                "view": {
+                  "allLayers": true,
+                  "dashboardVariable": true,
+                  "dashboardVariableName": "",
+                  "id": "fit",
+                  "lat": -25.441174,
+                  "lon": 113.072174,
+                  "noRepeat": true,
+                  "padding": 200,
+                  "zoom": 15
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-84": {
+        "kind": "Panel",
+        "spec": {
+          "id": 84,
+          "title": "Movement Status",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT movement FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "ignitionstatus",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "ignitionstatus",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/.*/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-85": {
+        "kind": "Panel",
+        "spec": {
+          "id": 85,
+          "title": "Ignition Status",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT ignitionstatus FROM trailer_input WHERE vin='$Trailer' ORDER BY time DESC LIMIT 1 ",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "ignitionstatus",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 1,
+                          "orderBy": {
+                            "property": {
+                              "name": "ignitionstatus",
+                              "type": "string"
+                            },
+                            "type": "property"
+                          },
+                          "orderByDirection": "DESC"
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "/.*/",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "text"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-89": {
+        "kind": "Panel",
+        "spec": {
+          "id": 89,
+          "title": "Frame Health",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "/* FRAME HOT-SPOTS — top nodes by risk (uses trailer_feea) */\r\nWITH src AS (\r\n  SELECT NodeNumber::int AS node, VIN,\r\n  COALESCE(Damage,0.0)::double precision AS dmg,\r\n  COALESCE(UtilizationRatio,0.0)::double precision AS ur,\r\n  COALESCE(EqStressRange,0.0)::double precision AS eqr,\r\n  COALESCE(MinStress,0.0)::double precision AS smin,\r\n  COALESCE(MaxStress,0.0)::double precision AS smax,\r\n  COALESCE(MaxStressRrange,0.0)::double precision AS msr\r\n  FROM trailer_fea WHERE VIN = '$Trailer'\r\n  ),\r\n  per_node AS (\r\n    SELECT *,\r\n    GREATEST(ur, dmg) AS risk_idx \r\n    FROM src)\r\nSELECT node AS \"Node\", ROUND(risk_idx::numeric,3) AS \"Risk\",\r\nCASE\r\nWHEN ur >= 1.0 OR dmg >= 1.0 THEN 'Critical'\r\nWHEN ur >= 0.90 OR dmg >= 0.70 THEN 'High'\r\nWHEN ur >= 0.75 OR dmg >= 0.40 THEN 'Watch'\r\nELSE 'Normal'\r\nEND\r\nAS \"Status\",\r\nROUND(ur::numeric,3) AS \"UtilizationRatio\",\r\nROUND(dmg::numeric,3) AS \"Damage\",\r\nROUND(eqr::numeric,1) AS \"EqStressRange\",\r\nROUND(smin::numeric,1) AS \"MinStress\",\r\nROUND(smax::numeric,1) AS \"MaxStress\",\r\nROUND(msr::numeric,1) AS \"MaxStressRrange\"\r\nFROM per_node\r\nORDER BY risk_idx DESC NULLS LAST\r\nLIMIT 20",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
                       }
                     },
                     "refId": "A",
@@ -3327,6 +2675,627 @@
           },
           "transparent": true
         }
+      },
+      "panel-90": {
+        "kind": "Panel",
+        "spec": {
+          "id": 90,
+          "title": "Frame Hot Spots",
+          "description": "Location of highest stress",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "/* FRAME HOT-SPOTS — top nodes by risk (uses trailer_feea) */\r\nWITH src AS (\r\n  SELECT NodeNumber::int AS node, VIN, \r\n  COALESCE(Damage,0.0)::double precision AS dmg, \r\n  COALESCE(UtilizationRatio,0.0)::double precision AS ur,\r\n  COALESCE(EqStressRange,0.0)::double precision AS eqr,\r\n  COALESCE(MinStress,0.0)::double precision AS smin,\r\n  COALESCE(MaxStress,0.0)::double precision AS smax,\r\n  COALESCE(MaxStressRrange,0.0)::double precision AS msr \r\n  FROM trailer_fea\r\n  WHERE VIN = '$Trailer'),\r\nper_node AS (\r\n  SELECT *, GREATEST(ur, dmg) AS risk_idx FROM src)\r\nSELECT node AS \"Node\",\r\nROUND(risk_idx::numeric,3) AS \"Risk\",\r\nCASE\r\nWHEN ur >= 1.0 OR dmg >= 1.0 THEN 'Critical'\r\nWHEN ur >= 0.90 OR dmg >= 0.70 THEN 'High'\r\nWHEN ur >= 0.75 OR dmg >= 0.40 THEN 'Watch'\r\nELSE 'Normal'\r\nEND\r\nAS \"Status\",\r\nROUND(ur::numeric,3) AS \"UtilizationRatio\",\r\nROUND(dmg::numeric,3) AS \"Damage\",\r\nROUND(eqr::numeric,1) AS \"EqStressRange\",\r\nROUND(smin::numeric,1) AS \"MinStress\",\r\nROUND(smax::numeric,1) AS \"MaxStress\",\r\nROUND(msr::numeric,1) AS \"MaxStressRrange\"\r\nFROM per_node\r\nORDER BY risk_idx DESC NULLS LAST\r\nLIMIT 20",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-91": {
+        "kind": "Panel",
+        "spec": {
+          "id": 91,
+          "title": "Frame Hot Spots",
+          "description": "Location of highest stress",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "/* FRAME HOT-SPOTS — top nodes by risk (uses trailer_feea) */\r\nWITH src AS (\r\n  SELECT NodeNumber::int AS node, VIN, \r\n  COALESCE(Damage,0.0)::double precision AS dmg, \r\n  COALESCE(UtilizationRatio,0.0)::double precision AS ur,\r\n  COALESCE(EqStressRange,0.0)::double precision AS eqr,\r\n  COALESCE(MinStress,0.0)::double precision AS smin,\r\n  COALESCE(MaxStress,0.0)::double precision AS smax,\r\n  COALESCE(MaxStressRrange,0.0)::double precision AS msr \r\n  FROM trailer_fea\r\n  WHERE VIN = '$Trailer'),\r\nper_node AS (\r\n  SELECT *, GREATEST(ur, dmg) AS risk_idx FROM src)\r\nSELECT node AS \"Node\",\r\nROUND(risk_idx::numeric,3) AS \"Risk\",\r\nCASE\r\nWHEN ur >= 1.0 OR dmg >= 1.0 THEN 'Critical'\r\nWHEN ur >= 0.90 OR dmg >= 0.70 THEN 'High'\r\nWHEN ur >= 0.75 OR dmg >= 0.40 THEN 'Watch'\r\nELSE 'Normal'\r\nEND\r\nAS \"Status\",\r\nROUND(ur::numeric,3) AS \"UtilizationRatio\",\r\nROUND(dmg::numeric,3) AS \"Damage\",\r\nROUND(eqr::numeric,1) AS \"EqStressRange\",\r\nROUND(smin::numeric,1) AS \"MinStress\",\r\nROUND(smax::numeric,1) AS \"MaxStress\",\r\nROUND(msr::numeric,1) AS \"MaxStressRrange\"\r\nFROM per_node\r\nORDER BY risk_idx DESC NULLS LAST\r\nLIMIT 20",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-92": {
+        "kind": "Panel",
+        "spec": {
+          "id": 92,
+          "title": "Vertical Force at Kingpin",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT \"time\", VIN, fzkingpinnreal/1000 AS \"Fz Kingpin (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\n-- AND $__timeFilter(\"time\")\r\n-- AND fzkingpinnreal BETWEEN -4e5 AND 4e5\r\nORDER BY \"time\"",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "displayMode": "list",
+                  "limit": 50,
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "timezone": [
+                  "browser"
+                ],
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": true
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-93": {
+        "kind": "Panel",
+        "spec": {
+          "id": 93,
+          "title": "Longitudinal Force at Kingpin",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT \"time\", VIN, fxkingpinn/1000 AS \"Fx Kingpin (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND fxkingpinn BETWEEN -25e4 AND 3e5\r\nORDER BY \"time\" DESC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "displayMode": "list",
+                  "limit": 50,
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "timezone": [
+                  "browser"
+                ],
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": true
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-94": {
+        "kind": "Panel",
+        "spec": {
+          "id": 94,
+          "title": "Torque around Trailer Axle System (Yaw Moment)",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT \"time\", VIN, mzyawnm/1000 AS \"Mz Yaw (kN·m)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\n--AND mzyawnm BETWEEN -5e5 AND 5e5\r\n--AND xax1lm BETWEEN -1 AND 1 \r\n--AND xax1rm BETWEEN -1 AND 1\r\n--AND xax2lm BETWEEN -1 AND 1 \r\n--AND xax2rm BETWEEN -1 AND 1\r\n--AND xax3lm BETWEEN -1 AND 1 \r\n--AND xax3rm BETWEEN -1 AND 1\r\nORDER BY \"time\"",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "displayMode": "list",
+                  "limit": 50,
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "timezone": [
+                  "browser"
+                ],
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "fieldMinMax": true
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
       }
     },
     "layout": {
@@ -3372,24 +3341,24 @@
                       "spec": {
                         "x": 8,
                         "y": 6,
-                        "width": 7,
-                        "height": 5,
+                        "width": 8,
+                        "height": 4,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-62"
+                          "name": "panel-66"
                         }
                       }
                     },
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 0,
-                        "y": 10,
+                        "x": 16,
+                        "y": 6,
                         "width": 8,
-                        "height": 4,
+                        "height": 6,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-66"
+                          "name": "panel-90"
                         }
                       }
                     }
@@ -3424,11 +3393,37 @@
                       "spec": {
                         "x": 8,
                         "y": 0,
-                        "width": 16,
-                        "height": 20,
+                        "width": 11,
+                        "height": 18,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-38"
+                          "name": "panel-83"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 19,
+                        "y": 0,
+                        "width": 2,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-85"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 19,
+                        "y": 5,
+                        "width": 2,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-84"
                         }
                       }
                     },
@@ -3437,24 +3432,37 @@
                       "spec": {
                         "x": 0,
                         "y": 10,
-                        "width": 3,
+                        "width": 4,
                         "height": 5,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-42"
+                          "name": "panel-65"
                         }
                       }
                     },
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 3,
+                        "x": 4,
                         "y": 10,
-                        "width": 5,
+                        "width": 4,
                         "height": 5,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-65"
+                          "name": "panel-82"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 19,
+                        "y": 10,
+                        "width": 2,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-42"
                         }
                       }
                     },
@@ -3470,175 +3478,6 @@
                           "name": "panel-67"
                         }
                       }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 18,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-44"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 8,
-                        "y": 20,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-53"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
-                        "y": 20,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-45"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 28,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-58"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 8,
-                        "y": 30,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-41"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
-                        "y": 30,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-49"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 38,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-54"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 8,
-                        "y": 40,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-52"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
-                        "y": 40,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-57"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 48,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-47"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 8,
-                        "y": 50,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-48"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
-                        "y": 50,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-59"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 58,
-                        "width": 8,
-                        "height": 10,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-60"
-                        }
-                      }
                     }
                   ]
                 }
@@ -3650,18 +3489,97 @@
             "spec": {
               "title": "Loading",
               "layout": {
-                "kind": "AutoGridLayout",
+                "kind": "GridLayout",
                 "spec": {
-                  "maxColumnCount": 3,
-                  "columnWidthMode": "standard",
-                  "rowHeightMode": "standard",
                   "items": [
                     {
-                      "kind": "AutoGridLayoutItem",
+                      "kind": "GridLayoutItem",
                       "spec": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-92"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 8,
+                        "y": 0,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-94"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 16,
+                        "y": 0,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-93"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 11,
+                        "width": 8,
+                        "height": 2,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-64"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "kind": "TabsLayoutTab",
+            "spec": {
+              "title": "FEA",
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 24,
+                        "height": 9,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-89"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 9,
+                        "width": 24,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-91"
                         }
                       }
                     }
@@ -3683,8 +3601,47 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
-                        "width": 4,
-                        "height": 7,
+                        "width": 9,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-80"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 9,
+                        "y": 0,
+                        "width": 9,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-72"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 4,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-74"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 3,
+                        "y": 4,
+                        "width": 3,
+                        "height": 5,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-68"
@@ -3694,13 +3651,91 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 4,
-                        "y": 0,
-                        "width": 4,
-                        "height": 7,
+                        "x": 6,
+                        "y": 4,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-73"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 9,
+                        "y": 4,
+                        "width": 3,
+                        "height": 5,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-70"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 12,
+                        "y": 4,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-78"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 9,
+                        "width": 9,
+                        "height": 3,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-81"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 12,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-75"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 3,
+                        "y": 12,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-76"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 6,
+                        "y": 12,
+                        "width": 3,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-77"
                         }
                       }
                     }
@@ -3712,10 +3747,26 @@
         ]
       }
     },
-    "links": [],
-    "liveNow": false,
+    "links": [
+      {
+        "title": "Acciaio Lab",
+        "type": "link",
+        "icon": "external link",
+        "tooltip": "",
+        "url": "https://www.acciaiolab.com/",
+        "tags": [],
+        "asDropdown": true,
+        "targetBlank": true,
+        "includeVars": false,
+        "keepTime": false
+      }
+    ],
+    "liveNow": true,
     "preload": false,
-    "tags": [],
+    "tags": [
+      "SOFA",
+      "AcciaioLab"
+    ],
     "timeSettings": {
       "timezone": "browser",
       "from": "2024-09-07T06:52:09.895Z",
