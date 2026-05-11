@@ -255,3 +255,23 @@ func GetTrailerInfo(pool *pgxpool.Pool) map[string]calc.Trailer {
 	}
 	return trailers
 }
+
+func DeleteTableData(pool *pgxpool.Pool) {
+	fmt.Printf("Deleting existing trailer_input data.\n")
+	_, err := pool.Exec(
+		context.Background(),
+		"TRUNCATE TABLE trailer_input",
+	)
+	if err != nil {
+		fmt.Printf("Delete rows error: %v", err)
+	}
+
+	fmt.Printf("Deleting existing trailer_loads data.\n")
+	_, err = pool.Exec(
+		context.Background(),
+		"TRUNCATE TABLE trailer_loads",
+	)
+	if err != nil {
+		fmt.Printf("Delete rows error: %v", err)
+	}
+}
