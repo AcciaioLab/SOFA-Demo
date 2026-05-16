@@ -4,12 +4,12 @@
   "metadata": {
     "name": "SOFA-DEMO-DASHBOARD",
     "namespace": "default",
-    "uid": "ff3b269e-4fbd-4ce8-bc7c-b0ccaef0858f",
-    "resourceVersion": "1778914107699014",
-    "generation": 9,
-    "creationTimestamp": "2026-05-16T05:20:44Z",
+    "uid": "3b30d308-aded-453b-9ccb-86aa22b9d919",
+    "resourceVersion": "1778914778791009",
+    "generation": 3,
+    "creationTimestamp": "2026-05-16T06:49:25Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "1877361706196992"
+      "grafana.app/deprecatedInternalID": "1899678692102144"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
@@ -18,11 +18,11 @@
       "grafana.app/managerAllowsEdits": "true",
       "grafana.app/managerId": "Acciaio Lab",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/sourceChecksum": "822f0d9d20df53b9e85d47b4637d1a8f",
+      "grafana.app/sourceChecksum": "56373f589cd7a14ecfaa5e98158cbe8c",
       "grafana.app/sourcePath": "/etc/grafana/provisioning/dashboards/demodashboard.json",
-      "grafana.app/sourceTimestamp": "1778907493000",
-      "grafana.app/updatedBy": "user:afm7gl3abxvcwd",
-      "grafana.app/updatedTimestamp": "2026-05-16T06:48:27Z"
+      "grafana.app/sourceTimestamp": "1778914124000",
+      "grafana.app/updatedBy": "user:dfm7ohynxukg0c",
+      "grafana.app/updatedTimestamp": "2026-05-16T06:59:38Z"
     }
   },
   "spec": {
@@ -6469,6 +6469,18 @@
         "icon": "external link",
         "tooltip": "",
         "url": "https://www.acciaiolab.com/",
+        "tags": [],
+        "asDropdown": true,
+        "targetBlank": true,
+        "includeVars": false,
+        "keepTime": false
+      },
+      {
+        "title": "Kiosk Mode",
+        "type": "link",
+        "icon": "dashboard",
+        "tooltip": "Enter Kiosk Mode",
+        "url": "http://localhost:3000/d/SOFA-DEMO-DASHBOARD/sofa-demo-dashboard?orgId=1&from=2025-08-19T05:00:00.000Z&to=2025-08-19T06:00:00.000Z&timezone=browser&dtab=tracking&var-Trailer=VIN_FMC_0007&refresh=5s&kiosk=1",
         "tags": [],
         "asDropdown": true,
         "targetBlank": true,
