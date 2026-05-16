@@ -4,25 +4,25 @@
   "metadata": {
     "name": "SOFA-DEMO-DASHBOARD",
     "namespace": "default",
-    "uid": "7266aef4-3336-46d6-a136-6858cd9747bf",
-    "resourceVersion": "1778500387323984",
-    "generation": 7,
-    "creationTimestamp": "2026-05-11T11:28:23Z",
+    "uid": "ff3b269e-4fbd-4ce8-bc7c-b0ccaef0858f",
+    "resourceVersion": "1778914107699014",
+    "generation": 9,
+    "creationTimestamp": "2026-05-16T05:20:44Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "157944997322752"
+      "grafana.app/deprecatedInternalID": "1877361706196992"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
       "grafana.app/folder": "",
       "grafana.app/managedBy": "classic-file-provisioning",
       "grafana.app/managerAllowsEdits": "true",
-      "grafana.app/managerId": "demodashboard",
+      "grafana.app/managerId": "Acciaio Lab",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/sourceChecksum": "e45046e1c93afacfd1987ccd76cbe3ea",
+      "grafana.app/sourceChecksum": "822f0d9d20df53b9e85d47b4637d1a8f",
       "grafana.app/sourcePath": "/etc/grafana/provisioning/dashboards/demodashboard.json",
-      "grafana.app/sourceTimestamp": "1778494402000",
-      "grafana.app/updatedBy": "user:bflqj43fnvri8b",
-      "grafana.app/updatedTimestamp": "2026-05-11T11:53:07Z"
+      "grafana.app/sourceTimestamp": "1778907493000",
+      "grafana.app/updatedBy": "user:afm7gl3abxvcwd",
+      "grafana.app/updatedTimestamp": "2026-05-16T06:48:27Z"
     }
   },
   "spec": {
@@ -50,6 +50,2315 @@
     "cursorSync": "Crosshair",
     "editable": true,
     "elements": {
+      "panel-114": {
+        "kind": "Panel",
+        "spec": {
+          "id": 114,
+          "title": "Active Stress Nodes",
+          "description": "Nodes with non-zero equivalent stress range",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT COUNT(*) AS \"Active Stress Nodes\" FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 0"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "blue"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-115": {
+        "kind": "Panel",
+        "spec": {
+          "id": 115,
+          "title": "Low Stress Nodes",
+          "description": "Nodes with eqstressrange 0–5 MPa",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT COUNT(*) AS \"Low (0–5 MPa)\" FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 0 AND eqstressrange <= 5"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-116": {
+        "kind": "Panel",
+        "spec": {
+          "id": 116,
+          "title": "Moderate Stress Nodes",
+          "description": "Nodes with eqstressrange 5–20 MPa",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT COUNT(*) AS \"Moderate (5–20 MPa)\" FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 5 AND eqstressrange <= 20"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "yellow"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-117": {
+        "kind": "Panel",
+        "spec": {
+          "id": 117,
+          "title": "High Stress Nodes",
+          "description": "Nodes with eqstressrange 20–50 MPa",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT COUNT(*) AS \"High (20–50 MPa)\" FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 20 AND eqstressrange <= 50"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "orange"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-118": {
+        "kind": "Panel",
+        "spec": {
+          "id": 118,
+          "title": "Critical Stress Nodes",
+          "description": "Nodes with eqstressrange > 50 MPa",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT COUNT(*) AS \"Critical (>50 MPa)\" FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 50"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-119": {
+        "kind": "Panel",
+        "spec": {
+          "id": 119,
+          "title": "Node Count by Stress Range Band",
+          "description": "Bar chart showing node count across each stress range band",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT\n  'Low (0–5)' AS band, COUNT(*) AS node_count\n  FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 0 AND eqstressrange <= 5\nUNION ALL SELECT 'Moderate (5–20)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 5 AND eqstressrange <= 20\nUNION ALL SELECT 'High (20–50)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 20 AND eqstressrange <= 50\nUNION ALL SELECT 'Critical (>50)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 50\nORDER BY 1"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "barchart",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "orientation": "horizontal",
+                "showValue": "always",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "fixed",
+                    "fixedColor": "blue"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 85,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Low (0–5 MPa)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "green",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Moderate (5–20 MPa)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "yellow",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "High (20–50 MPa)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Critical (>50 MPa)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "panel-120": {
+        "kind": "Panel",
+        "spec": {
+          "id": 120,
+          "title": "Stress Range Distribution (Active Nodes)",
+          "description": "Pie chart of stressed node distribution excluding zero-stress nodes",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT\n  'Low (0–5)' AS band, COUNT(*) AS node_count\n  FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 0 AND eqstressrange <= 5\nUNION ALL SELECT 'Moderate (5–20)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 5 AND eqstressrange <= 20\nUNION ALL SELECT 'High (20–50)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 20 AND eqstressrange <= 50\nUNION ALL SELECT 'Critical (>50)', COUNT(*) FROM trailer_fea WHERE vin = '$Trailer' AND eqstressrange > 50"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "piechart",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "displayLabels": [
+                  "name",
+                  "percent"
+                ],
+                "legend": {
+                  "displayMode": "list",
+                  "placement": "right",
+                  "showLegend": true,
+                  "values": [
+                    "percent"
+                  ]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "sort": "desc",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    }
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Low (0–5)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "green",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Moderate (5–20)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "yellow",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "High (20–50)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "orange",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Critical (>50)"
+                    },
+                    "properties": [
+                      {
+                        "id": "color",
+                        "value": {
+                          "fixedColor": "red",
+                          "mode": "fixed"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "panel-121": {
+        "kind": "Panel",
+        "spec": {
+          "id": 121,
+          "title": "Top Nodes by Equivalent Stress Range",
+          "description": "Top 20 nodes ranked by equivalent stress range with category classification",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "app": "grafana-assistant-app",
+                        "format": "table",
+                        "range": false,
+                        "rawSql": "SELECT\n  nodenumber AS node,\n  ROUND(eqstressrange::numeric, 2) AS eqstressrange,\n  CASE\n    WHEN eqstressrange > 50 THEN 'Critical (>50)'\n    WHEN eqstressrange > 20 THEN 'High (20–50)'\n    WHEN eqstressrange > 5  THEN 'Moderate (5–20)'\n    ELSE 'Low (0–5)'\n  END AS stress_band,\n  ROUND(minstress::numeric, 2) AS min_stress,\n  ROUND(maxstress::numeric, 2) AS max_stress,\n  ROUND(utilizationratio::numeric, 4) AS utilization_ratio,\n  ROUND(damage::numeric, 6) AS damage\nFROM trailer_fea\nWHERE vin = '$Trailer' AND eqstressrange > 0\nORDER BY eqstressrange DESC\nLIMIT 30"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "table",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "cellHeight": "sm",
+                "showHeader": true,
+                "sortBy": [
+                  {
+                    "desc": true,
+                    "displayName": "eqstressrange"
+                  }
+                ]
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "unit": "none",
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 5,
+                        "color": "yellow"
+                      },
+                      {
+                        "value": 20,
+                        "color": "orange"
+                      },
+                      {
+                        "value": 50,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "custom": {
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
+                    },
+                    "footer": {
+                      "reducers": []
+                    },
+                    "inspect": false
+                  }
+                },
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "stress_band"
+                    },
+                    "properties": [
+                      {
+                        "id": "mappings",
+                        "value": [
+                          {
+                            "options": {
+                              "Critical (>50)": {
+                                "color": "red",
+                                "index": 3,
+                                "text": "Critical (>50 MPa)"
+                              },
+                              "High (20–50)": {
+                                "color": "orange",
+                                "index": 2,
+                                "text": "High (20–50 MPa)"
+                              },
+                              "Low (0–5)": {
+                                "color": "green",
+                                "index": 0,
+                                "text": "Low (0–5 MPa)"
+                              },
+                              "Moderate (5–20)": {
+                                "color": "yellow",
+                                "index": 1,
+                                "text": "Moderate (5–20 MPa)"
+                              }
+                            },
+                            "type": "value"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "eqstressrange"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 200
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "panel-122": {
+        "kind": "Panel",
+        "spec": {
+          "id": 122,
+          "title": "FMC Internal Accelerometer",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT time, fmcaxisx AS \"X\", fmcaxisy AS \"Y\", fmcaxisz AS \"Z\" FROM trailer_input WHERE vin='$Trailer' ORDER BY time ASC LIMIT 300",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [
+                                {
+                                  "name": "fmcaxisx",
+                                  "type": "functionParameter"
+                                }
+                              ],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        },
+                        "table": "trailer_input"
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "right",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineStyle": {
+                      "fill": "solid"
+                    },
+                    "lineWidth": 1,
+                    "pointSize": 9,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-124": {
+        "kind": "Panel",
+        "spec": {
+          "id": 124,
+          "title": "Braking Events",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "WITH acc AS (\r\n  SELECT \"time\",\r\n  (FMCAxisX::double precision) * 9.81 AS ax_mps2\r\n  FROM trailer_input\r\n  WHERE VIN = '$Trailer' AND $__timeFilter(\"time\")\r\n  -- AND speed > 2  -- ← uncomment if you only want when moving\r\n  ),\r\n  b AS (\r\n    SELECT floor((GREATEST(0.0, -ax_mps2 - 0.5)) / 0.25)::int AS level,\r\n    count(*) AS n\r\n    FROM acc\r\n    WHERE ax_mps2 < -0.5\r\n    GROUP BY 1\r\n    ),\r\n    labeled AS (\r\n      SELECT CASE\r\n      WHEN (0.5 + level*0.25) < 1.0 THEN 'Soft'\r\n      WHEN (0.5 + level*0.25) < 1.5 THEN 'Moderate'\r\n      WHEN (0.5 + level*0.25) < 2.0 THEN 'Harsh'\r\n      ELSE 'Severe'\r\n      END AS label,\r\n      n\r\n      FROM b\r\n      ),\r\n      tot AS (\r\n        SELECT SUM(n) AS total FROM labeled\r\n        )\r\n        SELECT label,\r\n        SUM(n) AS \"Events\",\r\n        ROUND(100.0 * SUM(n) / (SELECT total FROM tot), 1) AS \"Percent\"\r\n        FROM labeled\r\n        GROUP BY label\r\n        ORDER BY CASE label\r\n        WHEN 'Soft' THEN 0 WHEN 'Moderate' THEN 1 WHEN 'Harsh' THEN 2 WHEN 'Severe' THEN 3 END",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "barchart",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "orientation": "auto",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-125": {
+        "kind": "Panel",
+        "spec": {
+          "id": 125,
+          "title": "Brake Forces",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT \r\n\"time\",\r\nVIN,\r\nfxbrakeax1total/1000 AS \"Fx Brake Axle 1 (kN)\",\r\nfxbrakeax2total/1000 AS \"Fx Brake Axle 2 (kN)\",\r\nfxbrakeax3total/1000 AS \"Fx Brake Axle 3 (kN)\",\r\nfxbraketotal/1000 AS \"Fx Brake Total (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND fxbrakeax1total BETWEEN -200000 AND 200000\r\nAND fxbrakeax2total BETWEEN -200000 AND 200000\r\nAND fxbrakeax3total BETWEEN -200000 AND 200000\r\nAND fxbraketotal BETWEEN -500000 AND 500000\r\nAND xax1lm BETWEEN -1 AND 1 AND xax1rm BETWEEN -1 AND 1\r\nAND xax2lm BETWEEN -1 AND 1 AND xax2rm BETWEEN -1 AND 1\r\nAND xax3lm BETWEEN -1 AND 1 AND xax3rm BETWEEN -1 AND 1\r\nORDER BY \"time\"",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-126": {
+        "kind": "Panel",
+        "spec": {
+          "id": 126,
+          "title": "Cornering Forces across Axles",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT\r\n\"time\", VIN,\r\n(fyax1ln + fyax1rn)/1000 AS \"Fy Axle 1 (kN)\",\r\n(fyax2ln + fyax2rn)/1000 AS \"Fy Axle 2 (kN)\",\r\n(fyax3ln + fyax3rn)/1000 AS \"Fy Axle 3 (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND fyax1ln BETWEEN -1e5 AND 1e5 AND fyax1rn BETWEEN -1e5 AND 1e5\r\nAND fyax2ln BETWEEN -1e5 AND 1e5 AND fyax2rn BETWEEN -1e5 AND 1e5\r\nAND fyax3ln BETWEEN -1e5 AND 1e5 AND fyax3rn BETWEEN -1e5 AND 1e5\r\nORDER BY \"time\"",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": true,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-127": {
+        "kind": "Panel",
+        "spec": {
+          "id": 127,
+          "title": "Lateral Forces",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT\r\n\"time\", VIN,\r\n(fyax1ln + fyax1rn)/1000 AS \"Fy Axle 1 (kN)\",\r\n(fyax2ln + fyax2rn)/1000 AS \"Fy Axle 2 (kN)\",\r\n(fyax3ln + fyax3rn)/1000 AS \"Fy Axle 3 (kN)\",\r\nfytotaln/1000 AS \"Fy Total (kN)\",\r\nbetabodyrad AS \"β Body (rad)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND ABS(betabodyrad) <= 0.35\r\nAND fytotaln BETWEEN -3e5 AND 3e5\r\nAND fyax1ln BETWEEN -1e5 AND 1e5 AND fyax1rn BETWEEN -1e5 AND 1e5\r\nAND fyax2ln BETWEEN -1e5 AND 1e5 AND fyax2rn BETWEEN -1e5 AND 1e5\r\nAND fyax3ln BETWEEN -1e5 AND 1e5 AND fyax3rn BETWEEN -1e5 AND 1e5\r\nORDER BY \"time\" ASC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-128": {
+        "kind": "Panel",
+        "spec": {
+          "id": 128,
+          "title": "Cornering Forces at Kingpin",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT \"time\", VIN, fykingpinnreal/1000 AS \"Fy Kingpin (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND fykingpinnreal BETWEEN -1.5e5 AND 1.5e5\r\nORDER BY \"time\" ASC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": -80,
+                        "color": "#EAB839"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "hue",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-129": {
+        "kind": "Panel",
+        "spec": {
+          "id": 129,
+          "title": "Left vs Right totals + LTR",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "SELECT\r\n\"time\",\r\nVIN,\r\n(fzax1absln + fzax2absln + fzax3absln)/1000.0 AS \"Left total (kN)\",\r\n(fzax1absrn + fzax2absrn + fzax3absrn)/1000.0 AS \"Right total (kN)\",\r\nLTRGroup AS \"LTR (ratio)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\nAND $__timeFilter(\"time\")\r\nAND LTRGroup BETWEEN -1 AND 1\r\nAND fzax1absln BETWEEN 0 AND 2e5 AND fzax1absrn BETWEEN 0 AND 2e5\r\nAND fzax2absln BETWEEN 0 AND 2e5 AND fzax2absrn BETWEEN 0 AND 2e5\r\nAND fzax3absln BETWEEN 0 AND 2e5 AND fzax3absrn BETWEEN 0 AND 2e5\r\nORDER BY \"time\" ASC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-130": {
+        "kind": "Panel",
+        "spec": {
+          "id": 130,
+          "title": "Dynamic Load",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "WITH base AS (\r\n  SELECT\r\n  \"time\",\r\n  VIN,\r\n  (-fztotaln)/1000.0 AS group_kN\r\n  FROM trailer_loads\r\n  WHERE VIN = '$Trailer'\r\n  AND $__timeFilter(\"time\")\r\n  AND LTRGroup BETWEEN -1 AND 1\r\n  AND fztotaln BETWEEN -450000 AND 0\r\n  -- 22.5t group safe clamp\r\n  AND xAx1Lm BETWEEN -0.15 AND 0.15 AND xAx1Rm BETWEEN -0.15 AND 0.15\r\n  AND xAx2Lm BETWEEN -0.15 AND 0.15 AND xAx2Rm BETWEEN -0.15 AND 0.15\r\n  AND xAx3Lm BETWEEN -0.15 AND 0.15 AND xAx3Rm BETWEEN -0.15 AND 0.15\r\n  ),\r\n  with_baseline AS (\r\n    SELECT\r\n    \"time\",\r\n    VIN,\r\n    group_kN,\r\n    AVG(group_kN) OVER (\r\n      ORDER BY \"time\"\r\n      RANGE BETWEEN INTERVAL '15 minutes' PRECEDING AND INTERVAL '15 minutes' FOLLOWING\r\n      ) AS group_baseline_kN\r\n      FROM base\r\n      )\r\n      SELECT\r\n      \"time\",\r\n      VIN,\r\n      group_kN - group_baseline_kN AS \"Group Dynamic (kN)\",\r\n      100.0 * NULLIF((group_kN - group_baseline_kN),0) / NULLIF(group_baseline_kN,0)\r\n      AS \"Group Dynamic (% of static)\"\r\n      FROM with_baseline\r\n      ORDER BY \"time\" ASC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": 300000,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-131": {
+        "kind": "Panel",
+        "spec": {
+          "id": 131,
+          "title": "FEA Panel",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "WITH raw AS (\r\n  SELECT\r\n  time_bucket('1s',\"time\") AS \"time\",\r\n  VIN,\r\n  -- Kingpin & yaw (kN / kN·m)\r\n  AVG(fxkingpinn)/1000.0 AS fx_kp_kN,\r\n  AVG(fykingpinnreal)/1000.0 AS fy_kp_kN,\r\n  AVG(fzkingpinnreal)/1000.0 AS fz_kp_kN,\r\n  AVG(mzyawnm)/1000.0 AS mz_kp_kNm,\r\n  -- Vertical totals from abs sides (kN)\r\n  AVG((fzax1absln+fzax2absln+fzax3absln)/1000.0) AS left_total_kN,\r\n  AVG((fzax1absrn+fzax2absrn+fzax3absrn)/1000.0) AS right_total_kN,\r\n  -- Lateral forces (kN)\r\n  AVG((fyax1ln+fyax1rn)/1000.0) AS fy_ax1_kN,\r\n  AVG((fyax2ln+fyax2rn)/1000.0) AS fy_ax2_kN,\r\n  AVG((fyax3ln+fyax3rn)/1000.0) AS fy_ax3_kN,\r\n  AVG((fyax1ln+fyax1rn+fyax2ln+fyax2rn+fyax3ln+fyax3rn)/1000.0) AS fy_total_kN,\r\n  -- Longitudinal brake total (kN)\r\n  AVG(fxbraketotal/1000.0) AS fx_brake_tot_kN\r\n  FROM trailer_loads\r\n  WHERE VIN = '$Trailer'\r\n  AND $__timeFilter(\"time\")\r\n  AND COALESCE(LTRGroup, 0) BETWEEN -1 AND 1\r\n  -- wide sanity clamps (avoid over-filtering)\r\n  AND fzkingpinnreal BETWEEN -400000 AND 400000\r\n  AND mzyawnm BETWEEN -1000000 AND 1000000\r\n  AND fxkingpinn BETWEEN -300000  AND 300000\r\n  AND fykingpinnreal BETWEEN -200000  AND 200000\r\n  AND fzax1absln BETWEEN 0 AND 200000 AND fzax1absrn BETWEEN 0 AND 200000\r\n  AND fzax2absln BETWEEN 0 AND 200000 AND fzax2absrn BETWEEN 0 AND 200000\r\n  AND fzax3absln BETWEEN 0 AND 200000 AND fzax3absrn BETWEEN 0 AND 200000\r\n  AND fytotaln BETWEEN -300000 AND 300000\r\n  AND fyax1ln BETWEEN -100000 AND 100000 AND fyax1rn BETWEEN -100000 AND 100000\r\n  AND fyax2ln BETWEEN -100000 AND 1000005 AND fyax2rn BETWEEN -100000 AND 100000\r\n  AND fyax3ln BETWEEN -100000 AND 100000 AND fyax3rn BETWEEN -100000 AND 100000\r\n  GROUP BY 1,2\r\n  )\r\n  SELECT *\r\n  FROM raw\r\n  ORDER BY \"time\" ASC",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "timeseries",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "annotations": {
+                  "clustering": -1,
+                  "multiLane": false
+                },
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "barWidthFactor": 0.6,
+                    "drawStyle": "line",
+                    "fillOpacity": 0,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 5,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "showValues": false,
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-132": {
+        "kind": "Panel",
+        "spec": {
+          "id": 132,
+          "title": "Left–Right Airbag Mismatch Above Threshold",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "/* LOAD BALANCE — % of time above threshold in window (Front & Rear) */\r\nWITH params AS (\r\n  SELECT 10.0::double precision AS thr_pct,\r\n  interval '30 seconds' AS step\r\n  ),\r\n  ts AS (\r\n    SELECT\r\n    time_bucket((SELECT step FROM params), \"time\") AS tb,\r\n    100.0 * ABS(AVG(abpreslhfront::double precision) - AVG(abpresrhfront::double precision))\r\n    / NULLIF((AVG(abpreslhfront::double precision) + AVG(abpresrhfront::double precision))/2.0, 0) AS front_mismatch_pct,\r\n    100.0 * ABS(AVG(abpreslhrear::double precision) - AVG(abpresrhrear::double precision))\r\n    / NULLIF((AVG(abpreslhrear::  double precision) + AVG(abpresrhrear:: double precision))/2.0, 0) AS rear_mismatch_pct\r\n    FROM trailer_input\r\n    WHERE VIN = '$Trailer' AND $__timeFilter(\"time\")\r\n    AND speed::double precision BETWEEN 20 AND 80\r\n    AND ABS((FMCAxisY::double precision) * 9.81) < 0.3*9.81\r\n    GROUP BY 1\r\n    ),\r\n    flags AS (\r\n      SELECT tb,\r\n      (front_mismatch_pct > (SELECT thr_pct FROM params)) AS front_exceed,\r\n      (rear_mismatch_pct  > (SELECT thr_pct FROM params)) AS rear_exceed\r\n      FROM ts\r\n      ),\r\n      agg AS (\r\n        SELECT\r\n        COUNT(*) AS n_buckets,\r\n        SUM(front_exceed::int) AS n_front_exceed,\r\n        SUM(rear_exceed::int) AS n_rear_exceed\r\n        FROM flags\r\n        )\r\n        SELECT\r\n        now() AS \"time\",\r\n        CASE WHEN n_buckets > 0 THEN ROUND(100.0 * n_front_exceed / n_buckets, 1) ELSE 0 END AS \"Front exceed (%)\",\r\n        CASE WHEN n_buckets > 0 THEN ROUND(100.0 * n_rear_exceed  / n_buckets, 1) ELSE 0 END AS \"Rear exceed (%)\"\r\n        FROM agg",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "stat",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-133": {
+        "kind": "Panel",
+        "spec": {
+          "id": 133,
+          "title": "RMS - Road vibration",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [
+                {
+                  "kind": "PanelQuery",
+                  "spec": {
+                    "query": {
+                      "kind": "DataQuery",
+                      "group": "grafana-postgresql-datasource",
+                      "version": "v0",
+                      "datasource": {
+                        "name": "sofa_db"
+                      },
+                      "spec": {
+                        "dataset": "sofadb",
+                        "editorMode": "code",
+                        "format": "table",
+                        "rawQuery": true,
+                        "rawSql": "WITH acc AS (\r\n  SELECT\r\n  \"time\",\r\n  speed::double precision AS speed_kmh,\r\n  sqrt(GREATEST(DLAxle1LRMSZ::double precision, 0.0)) AS a1L_g,\r\n  sqrt(GREATEST(DLAxle1RRMSZ::double precision, 0.0)) AS a1R_g,\r\n  sqrt(GREATEST(DLAxle2LRMSZ::double precision, 0.0)) AS a2L_g,\r\n  sqrt(GREATEST(DLAxle2RRMSZ::double precision, 0.0)) AS a2R_g\r\n  FROM trailer_input\r\n  WHERE VIN = '$Trailer'\r\n  AND $__timeFilter(\"time\")\r\n  AND speed::double precision > 2\r\n  ),\r\n  clean AS (\r\n    SELECT\r\n    \"time\",\r\n    CASE WHEN a1L_g <= 1.0 THEN a1L_g END AS a1L_g,\r\n    CASE WHEN a1R_g <= 1.0 THEN a1R_g END AS a1R_g,\r\n    CASE WHEN a2L_g <= 1.0 THEN a2L_g END AS a2L_g,\r\n    CASE WHEN a2R_g <= 1.0 THEN a2R_g END AS a2R_g\r\n    FROM acc\r\n    ),\r\n    comb AS (\r\n      SELECT\r\n      \"time\",\r\n      GREATEST(\r\n        COALESCE(a1L_g,0), COALESCE(a1R_g,0),\r\n        COALESCE(a2L_g,0), COALESCE(a2R_g,0)\r\n        ) AS rri_g,\r\n        ((a1L_g IS NOT NULL)::int + (a1R_g IS NOT NULL)::int\r\n        + (a2L_g IS NOT NULL)::int + (a2R_g IS NOT NULL)::int) AS n_ok\r\n        FROM clean\r\n        ),\r\n        bins AS (\r\n          SELECT\r\n          CASE\r\n          WHEN rri_g > 0.40 THEN 4\r\n          WHEN rri_g > 0.30 THEN 3\r\n          WHEN rri_g > 0.20 THEN 2\r\n          WHEN rri_g > 0.10 THEN 1\r\n          ELSE 0\r\n          END AS ord,\r\n          CASE\r\n          WHEN rri_g > 0.40 THEN 'Severe >0.4'\r\n          WHEN rri_g > 0.30 THEN 'Harsh >0.3'\r\n          WHEN rri_g > 0.20 THEN 'Moderate >0.2'\r\n          WHEN rri_g > 0.10 THEN 'Soft >0.1'\r\n          ELSE 'Very Low 0'\r\n          END AS label\r\n          FROM comb\r\n          WHERE n_ok >= 1\r\n          )\r\n          SELECT\r\n          label,\r\n          COUNT(*) AS n\r\n          FROM bins\r\n          GROUP BY label, ord\r\n          ORDER BY ord",
+                        "sql": {
+                          "columns": [
+                            {
+                              "parameters": [],
+                              "type": "function"
+                            }
+                          ],
+                          "groupBy": [
+                            {
+                              "property": {
+                                "type": "string"
+                              },
+                              "type": "groupBy"
+                            }
+                          ],
+                          "limit": 50
+                        }
+                      }
+                    },
+                    "refId": "A",
+                    "hidden": false
+                  }
+                }
+              ],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "barchart",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "barRadius": 0,
+                "barWidth": 0.97,
+                "fullHighlight": false,
+                "groupWidth": 0.7,
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "orientation": "auto",
+                "showValue": "auto",
+                "stacking": "none",
+                "tooltip": {
+                  "hideZeros": false,
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "xTickLabelRotation": 0,
+                "xTickLabelSpacing": 0
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "value": 0,
+                        "color": "green"
+                      },
+                      {
+                        "value": 80,
+                        "color": "red"
+                      }
+                    ]
+                  },
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "fillOpacity": 80,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "lineWidth": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  }
+                },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
       "panel-37": {
         "kind": "Panel",
         "spec": {
@@ -461,7 +2770,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT speed FROM trailer_input WHERE vin='$Trailer'",
+                        "rawSql": "SELECT speed FROM trailer_input WHERE vin='$Trailer' LIMIT 120",
                         "sql": {
                           "columns": [
                             {
@@ -2058,7 +4367,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT speedsat FROM trailer_input WHERE vin='$Trailer'",
+                        "rawSql": "SELECT speedsat FROM trailer_input WHERE vin='$Trailer' LIMIT 120",
                         "sql": {
                           "columns": [
                             {
@@ -2179,7 +4488,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT latitude, longitude FROM trailer_input WHERE vin='$Trailer'",
+                        "rawSql": "SELECT \"time\", latitude, longitude FROM trailer_input WHERE vin='$Trailer'",
                         "sql": {
                           "columns": [
                             {
@@ -2325,7 +4634,8 @@
                       "tooltip": false,
                       "viz": false
                     }
-                  }
+                  },
+                  "fieldMinMax": false
                 },
                 "overrides": []
               }
@@ -2697,108 +5007,6 @@
           "transparent": true
         }
       },
-      "panel-91": {
-        "kind": "Panel",
-        "spec": {
-          "id": 91,
-          "title": "Frame Hot Spots",
-          "description": "Location of highest stress",
-          "links": [],
-          "data": {
-            "kind": "QueryGroup",
-            "spec": {
-              "queries": [
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "grafana-postgresql-datasource",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "sofa_db"
-                      },
-                      "spec": {
-                        "dataset": "sofadb",
-                        "editorMode": "code",
-                        "format": "table",
-                        "rawQuery": true,
-                        "rawSql": "/* FRAME HOT-SPOTS — top nodes by risk (uses trailer_feea) */\r\nWITH src AS (\r\n  SELECT NodeNumber::int AS node, VIN, \r\n  COALESCE(Damage,0.0)::double precision AS dmg, \r\n  COALESCE(UtilizationRatio,0.0)::double precision AS ur,\r\n  COALESCE(EqStressRange,0.0)::double precision AS eqr,\r\n  COALESCE(MinStress,0.0)::double precision AS smin,\r\n  COALESCE(MaxStress,0.0)::double precision AS smax,\r\n  COALESCE(MaxStressRrange,0.0)::double precision AS msr \r\n  FROM trailer_fea\r\n  WHERE VIN = '$Trailer'),\r\nper_node AS (\r\n  SELECT *, GREATEST(ur, dmg) AS risk_idx FROM src)\r\nSELECT node AS \"Node\",\r\nROUND(risk_idx::numeric,3) AS \"Risk\",\r\nCASE\r\nWHEN ur >= 1.0 OR dmg >= 1.0 THEN 'Critical'\r\nWHEN ur >= 0.90 OR dmg >= 0.70 THEN 'High'\r\nWHEN ur >= 0.75 OR dmg >= 0.40 THEN 'Watch'\r\nELSE 'Normal'\r\nEND\r\nAS \"Status\",\r\nROUND(ur::numeric,3) AS \"UtilizationRatio\",\r\nROUND(dmg::numeric,3) AS \"Damage\",\r\nROUND(eqr::numeric,1) AS \"EqStressRange\",\r\nROUND(smin::numeric,1) AS \"MinStress\",\r\nROUND(smax::numeric,1) AS \"MaxStress\",\r\nROUND(msr::numeric,1) AS \"MaxStressRrange\"\r\nFROM per_node\r\nORDER BY risk_idx DESC NULLS LAST\r\nLIMIT 20",
-                        "sql": {
-                          "columns": [
-                            {
-                              "parameters": [],
-                              "type": "function"
-                            }
-                          ],
-                          "groupBy": [
-                            {
-                              "property": {
-                                "type": "string"
-                              },
-                              "type": "groupBy"
-                            }
-                          ],
-                          "limit": 50
-                        }
-                      }
-                    },
-                    "refId": "A",
-                    "hidden": false
-                  }
-                }
-              ],
-              "transformations": [],
-              "queryOptions": {}
-            }
-          },
-          "vizConfig": {
-            "kind": "VizConfig",
-            "group": "stat",
-            "version": "13.0.1",
-            "spec": {
-              "options": {
-                "colorMode": "value",
-                "graphMode": "area",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
-                  "fields": "",
-                  "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-              },
-              "fieldConfig": {
-                "defaults": {
-                  "thresholds": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "value": 0,
-                        "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
-                      }
-                    ]
-                  },
-                  "color": {
-                    "mode": "thresholds"
-                  }
-                },
-                "overrides": []
-              }
-            }
-          }
-        }
-      },
       "panel-92": {
         "kind": "Panel",
         "spec": {
@@ -2825,7 +5033,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT \"time\", VIN, fzkingpinnreal/1000 AS \"Fz Kingpin (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\n-- AND $__timeFilter(\"time\")\r\n-- AND fzkingpinnreal BETWEEN -4e5 AND 4e5\r\nORDER BY \"time\"",
+                        "rawSql": "SELECT \"time\", VIN, fzkingpinnreal/1000 AS \"Fz Kingpin (kN)\"\r\nFROM trailer_loads\r\nWHERE VIN = '$Trailer'\r\n-- AND $__timeFilter(\"time\")\r\n-- AND fzkingpinnreal BETWEEN -4e5 AND 4e5\r\nORDER BY \"time\" ASC",
                         "sql": {
                           "columns": [
                             {
@@ -2912,7 +5120,7 @@
                       "tooltip": false,
                       "viz": false
                     },
-                    "insertNulls": false,
+                    "insertNulls": 300000,
                     "lineInterpolation": "linear",
                     "lineWidth": 1,
                     "pointSize": 5,
@@ -3029,6 +5237,14 @@
                       {
                         "value": 0,
                         "color": "green"
+                      },
+                      {
+                        "value": -80,
+                        "color": "dark-red"
+                      },
+                      {
+                        "value": 80,
+                        "color": "dark-red"
                       }
                     ]
                   },
@@ -3045,13 +5261,13 @@
                     "barWidthFactor": 0.6,
                     "drawStyle": "line",
                     "fillOpacity": 0,
-                    "gradientMode": "none",
+                    "gradientMode": "hue",
                     "hideFrom": {
                       "legend": false,
                       "tooltip": false,
                       "viz": false
                     },
-                    "insertNulls": false,
+                    "insertNulls": 300000,
                     "lineInterpolation": "linear",
                     "lineWidth": 1,
                     "pointSize": 5,
@@ -3190,7 +5406,7 @@
                       "tooltip": false,
                       "viz": false
                     },
-                    "insertNulls": false,
+                    "insertNulls": 300000,
                     "lineInterpolation": "linear",
                     "lineWidth": 1,
                     "pointSize": 5,
@@ -3242,7 +5458,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT abpreslhfront AS \"Airbag Pressure Left Front\", abpreslhrear AS \"Airbag Pressure Left Rear\" from trailer_input WHERE vin='$Trailer'",
+                        "rawSql": "SELECT abpreslhfront AS \"Airbag Pressure Left Front\", abpreslhrear AS \"Airbag Pressure Left Rear\" from trailer_input WHERE vin='$Trailer' LIMIT 120",
                         "sql": {
                           "columns": [
                             {
@@ -3355,7 +5571,7 @@
                         "editorMode": "code",
                         "format": "table",
                         "rawQuery": true,
-                        "rawSql": "SELECT abpresrhfront AS \"Airbag Pressure Right Front\", abpresrhrear AS \"Airbag Pressure Right Rear\" from trailer_input WHERE vin='$Trailer'",
+                        "rawSql": "SELECT abpresrhfront AS \"Airbag Pressure Right Front\", abpresrhrear AS \"Airbag Pressure Right Rear\" from trailer_input WHERE vin='$Trailer' LIMIT 120",
                         "sql": {
                           "columns": [
                             {
@@ -3721,6 +5937,19 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
+                        "x": 16,
+                        "y": 18,
+                        "width": 8,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-133"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
                         "x": 0,
                         "y": 22,
                         "width": 8,
@@ -3802,6 +6031,123 @@
                         "x": 0,
                         "y": 11,
                         "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-125"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 8,
+                        "y": 11,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-126"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 16,
+                        "y": 11,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-128"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 22,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-124"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 8,
+                        "y": 22,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-130"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 16,
+                        "y": 22,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-129"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 33,
+                        "width": 8,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-132"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 8,
+                        "y": 33,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-127"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 16,
+                        "y": 33,
+                        "width": 8,
+                        "height": 11,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-131"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 41,
+                        "width": 8,
                         "height": 3,
                         "element": {
                           "kind": "ElementReference",
@@ -3828,7 +6174,7 @@
                         "x": 0,
                         "y": 0,
                         "width": 24,
-                        "height": 9,
+                        "height": 6,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-89"
@@ -3839,12 +6185,103 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 0,
-                        "y": 9,
-                        "width": 24,
-                        "height": 8,
+                        "y": 6,
+                        "width": 12,
+                        "height": 9,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-91"
+                          "name": "panel-119"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 12,
+                        "y": 6,
+                        "width": 12,
+                        "height": 9,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-120"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 15,
+                        "width": 5,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-114"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 5,
+                        "y": 15,
+                        "width": 5,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-115"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 10,
+                        "y": 15,
+                        "width": 5,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-116"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 15,
+                        "y": 15,
+                        "width": 5,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-117"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 20,
+                        "y": 15,
+                        "width": 4,
+                        "height": 4,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-118"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 19,
+                        "width": 24,
+                        "height": 10,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-121"
                         }
                       }
                     }
@@ -3968,6 +6405,19 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
+                        "x": 9,
+                        "y": 9,
+                        "width": 9,
+                        "height": 13,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-122"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
                         "x": 0,
                         "y": 12,
                         "width": 3,
@@ -4034,8 +6484,8 @@
     ],
     "timeSettings": {
       "timezone": "browser",
-      "from": "2025-08-19T05:01:05.900Z",
-      "to": "2025-08-19T08:16:29.900Z",
+      "from": "2025-08-19T05:00:00.000Z",
+      "to": "2025-08-19T06:00:00.000Z",
       "autoRefresh": "5s",
       "autoRefreshIntervals": [
         "5s",
@@ -4052,7 +6502,7 @@
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
     },
-    "title": "SOFA-DEMO-DASHBOARD",
+    "title": "SOFA Demo Dashboard",
     "variables": [
       {
         "kind": "QueryVariable",
