@@ -19,15 +19,17 @@ const httpPort string = ":8888"
 func main() {
 	fmt.Println("SOFA Demo App - Starting...")
 
-	// Serve the docs
-	e := echo.New()
+	go func() {
+		// Serve the docs
+		e := echo.New()
 
-	// Serve the static content
-	e.Static("/docs", "docs")
+		// Serve the static content
+		e.Static("/docs", "docs")
 
-	// Start Server
-	fmt.Printf("SOFA web app listening on %s...", httpPort)
-	e.Logger.Fatal(e.Start(httpPort))
+		// Start Server
+		fmt.Printf("SOFA web app listening on %s...", httpPort)
+		e.Logger.Fatal(e.Start(httpPort))
+	}()
 
 	// Connect to DB
 	dbpool, err := db.CreateDBPool()
