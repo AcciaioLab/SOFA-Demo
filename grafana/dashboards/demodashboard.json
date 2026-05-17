@@ -4,12 +4,12 @@
   "metadata": {
     "name": "SOFA-DEMO-DASHBOARD",
     "namespace": "default",
-    "uid": "3b30d308-aded-453b-9ccb-86aa22b9d919",
-    "resourceVersion": "1778914778791009",
-    "generation": 3,
-    "creationTimestamp": "2026-05-16T06:49:25Z",
+    "uid": "f81ba13d-83ca-4e34-81c2-d1360b24dd9b",
+    "resourceVersion": "1779010156173013",
+    "generation": 2,
+    "creationTimestamp": "2026-05-17T09:25:56Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "1899678692102144"
+      "grafana.app/deprecatedInternalID": "2301455763824640"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
@@ -18,11 +18,11 @@
       "grafana.app/managerAllowsEdits": "true",
       "grafana.app/managerId": "Acciaio Lab",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/sourceChecksum": "56373f589cd7a14ecfaa5e98158cbe8c",
+      "grafana.app/sourceChecksum": "640a0f582bfdb58e256b6af29afcbd7e",
       "grafana.app/sourcePath": "/etc/grafana/provisioning/dashboards/demodashboard.json",
-      "grafana.app/sourceTimestamp": "1778914124000",
-      "grafana.app/updatedBy": "user:dfm7ohynxukg0c",
-      "grafana.app/updatedTimestamp": "2026-05-16T06:59:38Z"
+      "grafana.app/sourceTimestamp": "1779009904000",
+      "grafana.app/updatedBy": "user:dfmbmwzip1edcc",
+      "grafana.app/updatedTimestamp": "2026-05-17T09:29:16Z"
     }
   },
   "spec": {
@@ -2353,6 +2353,43 @@
                     }
                   }
                 },
+                "overrides": []
+              }
+            }
+          }
+        }
+      },
+      "panel-134": {
+        "kind": "Panel",
+        "spec": {
+          "id": 134,
+          "title": "",
+          "description": "",
+          "links": [],
+          "data": {
+            "kind": "QueryGroup",
+            "spec": {
+              "queries": [],
+              "transformations": [],
+              "queryOptions": {}
+            }
+          },
+          "vizConfig": {
+            "kind": "VizConfig",
+            "group": "text",
+            "version": "13.0.1",
+            "spec": {
+              "options": {
+                "code": {
+                  "language": "plaintext",
+                  "showLineNumbers": false,
+                  "showMiniMap": false
+                },
+                "content": "<!-- Wrapper Grid Container -->\n  <div style=\"max-width: 1200px; margin: 0 auto;\">\n    \n    <!-- Header Text Section -->\n    <div style=\"text-align: center; margin-bottom: 3rem;\">\n      <h1 style=\"font-size: 2.25rem; font-weight: 800; margin: 0 0 0.5rem 0; color: #CCCCDC;\">SOFA Reference Manuals</h1>\n    </div>\n\n    <!-- Responsive Grid without Style Tags (Using Inline CSS Display Grid) -->\n    <div style=\"display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;\">\n      \n      <!-- Card 1 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">Workshop Service Guide BPW Airbag Suspensions</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">Information on servicing and maintaining BPW running gear please refer to the BPW OPERATOR’S MANUAL or the relevant \nWORKSHOP MANUALS. All page number references refer to pages in the BPW OPERATOR’S MANUAL (available on request).</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/BPWA1Poster_Airbag_Suspension.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n      <!-- Card 2 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">Workshop Service Guide BPW Drum Brakes with ECO, ECO Plus and ECO Plus 3 Hubs</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">information on servicing and maintaining BPW running gear please refer to the BPW OPERATOR’S MANUAL or the relevant WORKSHOP MANUALS. All page number references refer to pages in the BPW OPERATOR’S MANUAL (available on request).</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/BPWA1Posters_BPW_Drum_Brake_Axles.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n      <!-- Card 3 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">Chassis Manufacturing Checklist</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">Mick Murray Welding Chassis build checklist.</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/Chassis_Manufacturing_Checklist.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n      <!-- Card 4 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">OM-0059FB Suspension Assembly</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">H/Duty 'OM/D36' Overslung Airbag Suspension C/W Special Hanger and Seats.</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/OM0059FB_Suspension_Assembly.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n      <!-- Card 5 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">Specification Sheet - Tri-axle Quad Roadtrain Side Tip Combination</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">23m3 Tri-axle Side Tipping Tow Trailer - Operating Conditions 80% on Road – 20% Maintained Haul Roads Std Legal Payload.</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/QD01517_Rev_B-Specs_Quad_Roadtrain_Side_Tip_Combination-BPW_Air_Drum-5mm_Bodies.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n      <!-- Card 6 -->\n      <div style=\"background: #CCCCDC; border: 1px solid #0f172a; border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);\">\n        <div style=\"margin-bottom: 1.5rem;\">\n          <div style=\"display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;\">\n            <span style=\"background-color: #fee2e2; color: #dc2626; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px;\">PDF</span>\n          </div>\n          <h2 style=\"font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: #0f172a; line-height: 1.3;\">Workshop Manual</h2>\n          <p style=\"color: #0f172a; font-size: 0.95rem; margin: 0;\">BPW air suspensions, series AL / SL / O.</p>\n        </div>\n        <div style=\"display: flex; gap: 0.75rem;\">\n          <a href=\"//localhost:8888/docs/Workshop-manual-air-suspensions-series-AL-SL-O-35391701e.pdf\" target=\"_blank\" style=\"flex: 1; text-align: center; text-decoration: none; padding: 0.625rem 1rem; font-size: 0.9rem; font-weight: 500; border-radius: 8px; color: #0f172a; border: 1px solid #0f172a;\">View</a>\n        </div>\n      </div>\n\n    </div>\n  </div>",
+                "mode": "html"
+              },
+              "fieldConfig": {
+                "defaults": {},
                 "overrides": []
               }
             }
@@ -6451,6 +6488,32 @@
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-77"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "kind": "TabsLayoutTab",
+            "spec": {
+              "title": "Manuals",
+              "layout": {
+                "kind": "GridLayout",
+                "spec": {
+                  "items": [
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 24,
+                        "height": 29,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-134"
                         }
                       }
                     }

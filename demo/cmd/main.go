@@ -8,13 +8,26 @@ import (
 	"sofa-demo/internal/db"
 	"sofa-demo/internal/parsecsv"
 	"time"
+
+	"github.com/labstack/echo/v4"
 )
 
 const demoTime int = 30     // Time in minutes for one run of the demo
 const demoPauseTime int = 3 // Time in minutes to pause at the end of the data stream.
+const httpPort string = ":8888"
 
 func main() {
 	fmt.Println("SOFA Demo App - Starting...")
+
+	// Serve the docs
+	e := echo.New()
+
+	// Serve the static content
+	e.Static("/docs", "docs")
+
+	// Start Server
+	fmt.Printf("SOFA web app listening on %s...", httpPort)
+	e.Logger.Fatal(e.Start(httpPort))
 
 	// Connect to DB
 	dbpool, err := db.CreateDBPool()

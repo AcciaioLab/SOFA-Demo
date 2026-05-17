@@ -64,6 +64,7 @@ services:
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
       # - ./grafana/config:/etc/grafana
+      - ./docs:/docs/
     networks:
       - sofa
     depends_on:

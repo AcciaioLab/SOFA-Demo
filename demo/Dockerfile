@@ -17,8 +17,9 @@ FROM gcr.io/distroless/base-debian12 AS build-release-stage
 
 WORKDIR /
 
-COPY --from=build-stage /sofademo /sofademo
 COPY ./data/ ./data/
+COPY ./docs/ ./docs/
+COPY --from=build-stage /sofademo /sofademo
 
 # EXPOSE 8888
 
